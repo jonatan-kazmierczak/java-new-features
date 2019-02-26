@@ -1,6 +1,11 @@
 # Java 12 - new features 
 
-## JShell usability improvements
+Features with their ratings:
+* :+1: useful
+* :-1: removed / useless / not useful
+* :disappointed: disappointing
+
+## :+1: JShell usability improvements
 See JShell help for more details
 ```
 $ jshell
@@ -42,13 +47,37 @@ jshell> /help keys
 |  ...
 ```
 
-## 325: Switch Expressions (Preview)
+You can try the following code snippets in `jshell`.
 
-## 326: Raw String Literals (Preview)
+## :disappointed: 325: Switch Expressions (Preview)
+
+## :-1: ~326: Raw String Literals (Preview)~
 Feature removed.  
 There are 2 leftovers in `String`:
-### transform
-### indent
+### :-1: transform
+How to rewrite this snippet
+```java
+Integer.parseInt( "65536" )
+```
+in overcomplicated and overweighted way?
+
+Here you are:
+```java
+"65536".transform( Integer::parseInt )
+```
+
+### :-1: indent
+Would you like to format your JSON?  
+You are expecting too much from Java.
+But you can adjust indentation:
+
+```java
+var jsonInner = "'name': 'OpenJDK',\n'version': 12\n".replace( '\'', '"' );
+System.out.println( jsonInner );
+var jsonOuter = "{\n" + jsonInner.indent( 4 ) + "}\n";
+System.out.println( jsonOuter );
+System.out.println( jsonOuter.indent( -8 ) );
+```
 
 ## Other extensions to the standard library
 ### CompactNumberFormat
@@ -58,18 +87,32 @@ There are 2 leftovers in `String`:
 ## 334: JVM Constants API
 
 ## Prformance improvements
-### 341: Default CDS Archives
-### 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
+### :disappointed: 341: Default CDS Archives
+Nothing new - unless you are building custom JDK images.
+
+### :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
+Included in RedHat build.
+
+:disappointed: Not included in the official build from Oracle.
+
+```
+$ java -XX:+UseShenandoahGC
+Error: VM option 'UseShenandoahGC' is experimental and must be enabled via -XX:+UnlockExperimentalVMOptions.
+
+$ java -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC
+Error occurred during initialization of VM
+Option -XX:+UseShenandoahGC not supported
+```
+
 ### 344: Abortable Mixed Collections for G1
 ### Performance comparison: 1.8 vs. 12
 
 ## 346: Promptly Return Unused Committed Memory from G1
+Made in :switzerland:
 
 ## 230: Microbenchmark Suite
 ## 340: One AArch64 Port, Not Two
 
-
-
-
 # Leftovers from version 11
-## JMC
+## :disappointed: JDK Mission Control 7
+:disappointed: Still not available.
