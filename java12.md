@@ -2,8 +2,9 @@
 
 Features with their ratings:
 * :+1: useful
-* :-1: removed / useless / not useful
-* :disappointed: disappointing
+* :-1: removed
+* :disappointed: not available
+* :confused: no added value
 
 ## :+1: JShell usability improvements
 See JShell help for more details
@@ -49,10 +50,8 @@ jshell> /help keys
 
 You can try the following code snippets in `jshell`.
 
-## :disappointed: 325: Switch Expressions (Preview)
-
 ## :-1: ~326: Raw String Literals (Preview)~
-Feature removed.  
+Feature removed. For good.  
 There are 2 leftovers in `String`:
 ### :-1: transform
 How to rewrite this snippet
@@ -79,16 +78,57 @@ System.out.println( jsonOuter );
 System.out.println( jsonOuter.indent( -8 ) );
 ```
 
+## :disappointed: 325: Switch Expressions (Preview)
+
+By using switch expressions with default configuration, you will see an error:
+```
+|  Error:
+|  switch expressions are a preview feature and are disabled by default.
+|    (use --enable-preview to enable switch expressions)
+```
+
+You have to enable that feature:
+```
+/usr/lib/jvm/java-12-openjdk/bin/jshell --enable-preview
+```
+
+Then you can use it:
+```java
+String developerRating( int numberOfChildren ) {
+    return switch (numberOfChildren) {
+        case 0 -> "open source contributor";
+        case 1 -> "junior";
+        case 2 -> "senior";
+        case 3 -> "expert";
+        default -> {
+            if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
+            break "manager";
+        }
+    };
+}
+
+developerRating( 0 );
+developerRating( 4 );
+```
+
 ## Other extensions to the standard library
 ### CompactNumberFormat
 ### Files.mismatch
+
+```java
+Files.mismatch( Paths.get("doesn't exist"), Paths.get("doesn't exist") )
+```
+gives result `-1` - means the 2 non exist files are equal.  
+Is this what you would expect?
+
 ### Collectors.teeing
 
-## 334: JVM Constants API
+## :confused: 334: JVM Constants API
+Good for tools like Class Visualizer. Otherwise no added value.
 
 ## Prformance improvements
-### :disappointed: 341: Default CDS Archives
-Nothing new - unless you are building custom JDK images.
+### :confused: 341: Default CDS Archives
+Nothing new - unless you are building custom JRE images.
 
 ### :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
 Included in RedHat build.
@@ -104,15 +144,16 @@ Error occurred during initialization of VM
 Option -XX:+UseShenandoahGC not supported
 ```
 
-### 344: Abortable Mixed Collections for G1
-### Performance comparison: 1.8 vs. 12
+### :question: 344: Abortable Mixed Collections for G1
+Status unclear.
 
-## 346: Promptly Return Unused Committed Memory from G1
-Made in :switzerland:
+## :disappointed: 346: Promptly Return Unused Committed Memory from G1
+Made in :switzerland:  
+:disappointed: switched off by default.
 
-## 230: Microbenchmark Suite
-## 340: One AArch64 Port, Not Two
+## :confused: 230: Microbenchmark Suite
+## :confused: 340: One AArch64 Port, Not Two
 
 # Leftovers from version 11
-## :disappointed: JDK Mission Control 7
-:disappointed: Still not available.
+## :-1: JDK Mission Control 7
+:-1: All previous builds are removed.
