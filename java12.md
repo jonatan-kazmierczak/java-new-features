@@ -53,7 +53,7 @@ You can try the following code snippets in `jshell`.
 ## :-1: ~326: Raw String Literals (Preview)~
 Feature removed. For good.  
 There are 2 leftovers in `String`:
-### :-1: transform
+### :confused: transform
 How to rewrite this snippet
 ```java
 Integer.parseInt( "65536" )
@@ -65,7 +65,7 @@ Here you are:
 "65536".transform( Integer::parseInt )
 ```
 
-### :-1: indent
+### :confused: indent
 Would you like to format your JSON?  
 You are expecting too much from Java.
 But you can adjust indentation:
@@ -87,7 +87,7 @@ By using switch expressions with default configuration, you will see an error:
 |    (use --enable-preview to enable switch expressions)
 ```
 
-You have to enable that feature:
+You have to enable that feature first:
 ```
 /usr/lib/jvm/java-12-openjdk/bin/jshell --enable-preview
 ```
@@ -118,7 +118,7 @@ developerRating( 4 );
 ```java
 Files.mismatch( Paths.get("doesn't exist"), Paths.get("doesn't exist") )
 ```
-gives result `-1` - means the 2 non exist files are equal.  
+gives result `-1` - means the 2 non existing files are equal.  
 Is this what you would expect?
 
 ### Collectors.teeing
@@ -156,4 +156,4 @@ Made in :switzerland:
 
 # Leftovers from version 11
 ## :-1: JDK Mission Control 7
-:-1: All previous builds are removed.
+:-1: All builds are removed.
