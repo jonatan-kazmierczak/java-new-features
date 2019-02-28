@@ -137,6 +137,7 @@ It is not what you could expect - they are ISO shortcuts :)
 #### :+1: Long variant
 
 ```java
+import java.text.*;
 var cnf = NumberFormat.getCompactNumberInstance( Locale.GERMAN, NumberFormat.Style.LONG )
 
 cnf.format( 1L << 10 ); // ==> 1 Tausend
@@ -149,7 +150,7 @@ cnf.format( 1L << 50 ); // ==> 1126 Billionen
 ### :confused: Files.mismatch
 
 ```java
-Files.mismatch( Paths.get("doesn't exist"), Paths.get("doesn't exist") )
+Files.mismatch( Paths.get("doesn't exist"), Paths.get("doesn't exist") ); // ==> -1
 ```
 gives result `-1` - means the 2 non existing files are equal.  
 Is this what you would expect?
@@ -166,11 +167,10 @@ Please don't be surprise by new super-interfaces added to some core classes - sh
 
 ![ConstantDesc](diagrams/ConstantDesc.png "ConstantDesc")
 
-## Prformance improvements
-### :confused: 341: Default CDS Archives
+## :confused: 341: Default CDS Archives
 Nothing new - unless you are building custom JRE images.
 
-### :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
+## :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
 Included in RedHat build.
 
 :disappointed: Not included in the official build from Oracle.
@@ -184,7 +184,7 @@ Error occurred during initialization of VM
 Option -XX:+UseShenandoahGC not supported
 ```
 
-### :question: 344: Abortable Mixed Collections for G1
+## :question: 344: Abortable Mixed Collections for G1
 Status unclear.
 
 ## :disappointed: 346: Promptly Return Unused Committed Memory from G1
