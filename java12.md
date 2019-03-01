@@ -166,7 +166,7 @@ in overcomplicated and overweighted way?
 
 I try this:
 ```java
-Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting() ), (s, c) -> s / n )
+Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting() ), (s, c) -> s / c )
 ```
 
 but instead of expected `7.5`, I receive an error:
