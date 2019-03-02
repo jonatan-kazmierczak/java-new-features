@@ -126,8 +126,9 @@ import java.text.*;
 var cnf = NumberFormat.getCompactNumberInstance();
 
 cnf.format( 1L << 10 ); // ==> 1K
+cnf.format( 1920 );     // ==> 2K - instead of 1.9K
 cnf.format( 1L << 20 ); // ==> 1M
-cnf.format( 1L << 30 ); // ==> 1B - what?
+cnf.format( 1L << 30 ); // ==> 1B - why?
 cnf.format( 1L << 40 ); // ==> 1T
 cnf.format( 1L << 50 ); // ==> 1126T
 ```
@@ -139,12 +140,17 @@ Please see the official website for details: https://unicode.org/reports/tr35/tr
 
 ```java
 import java.text.*;
-var cnf = NumberFormat.getCompactNumberInstance( Locale.GERMAN, NumberFormat.Style.LONG )
+var cnf = NumberFormat.getCompactNumberInstance( Locale.GERMAN, NumberFormat.Style.LONG );
 
 cnf.format( 1L << 10 ); // ==> 1 Tausend
 cnf.format( 1L << 20 ); // ==> 1 Million
+cnf.format( 1L << 21 ); // ==> 2 Million (!) - instead of 2 Millionen
+cnf.format( 1L << 24 ); // ==> 17 Millionen
 cnf.format( 1L << 30 ); // ==> 1 Milliarde
+cnf.format( 1L << 31 ); // ==> 2 Milliarde (!) - instead of 2 Milliarden
+cnf.format( 1L << 34 ); // ==> 17 Milliarden
 cnf.format( 1L << 40 ); // ==> 1 Billion
+cnf.format( 1L << 41 ); // ==> 2 Billion (!) - instead of 2 Billionen
 cnf.format( 1L << 50 ); // ==> 1126 Billionen
 ```
 
@@ -195,7 +201,7 @@ You can turn it on as follows:
 java -XX:+UseShenandoahGC
 ```
 
-:-1: Included in Debian builds:
+:+1: Included in Debian builds:
 ```
 $ java -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -verbose:gc -version
 [0.001s][info][gc] Consider -XX:+ClassUnloadingWithConcurrentMark if large pause times are observed on class-unloading sensitive workloads
