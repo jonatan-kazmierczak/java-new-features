@@ -166,7 +166,11 @@ in overcomplicated and overweighted way?
 
 Here you are:
 ```java
-Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting(), (s, c) -> s / c ) )
+Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing(
+    Collectors.summingDouble( i -> i ),
+    Collectors.counting(),
+    (s, c) -> s / c
+) )
 ```
 
 ## :confused: 334: JVM Constants API
@@ -183,12 +187,24 @@ Please don't be surprise by new super-interfaces added to some core classes - sh
 Nothing new - unless you are building custom JRE images.
 
 ## :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
-Included in RedHat builds.  
-You can find it in OpenJDK since v1.8.0 on RedHat Linux 7.x.
 
+:+1: Included in RedHat builds.  
+You can find it in OpenJDK since v1.8.0 on RedHat Linux 7.x.
 You can turn it on as follows:
 ```
 java -XX:+UseShenandoahGC
+```
+
+:-1: Included in Debian builds:
+```
+$ java -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -verbose:gc -version
+[0.001s][info][gc] Consider -XX:+ClassUnloadingWithConcurrentMark if large pause times are observed on class-unloading sensitive workloads
+[0.003s][info][gc] Heuristics ergonomically sets -XX:+ExplicitGCInvokesConcurrent
+[0.003s][info][gc] Heuristics ergonomically sets -XX:+ShenandoahImplicitGCInvokesConcurrent
+[0.005s][info][gc] Using Shenandoah
+openjdk version "12" 2019-03-19
+OpenJDK Runtime Environment (build 12+33-Debian-1)
+OpenJDK 64-Bit Server VM (build 12+33-Debian-1, mixed mode, sharing)
 ```
 
 :disappointed: Not included in the official build from Oracle.  
