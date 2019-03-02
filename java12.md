@@ -164,27 +164,9 @@ Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.averagingInt( i -> i ) )
 ```
 in overcomplicated and overweighted way?
 
-I try this:
+Here you are:
 ```java
-Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting() ), (s, c) -> s / c )
-```
-
-but instead of expected `7.5`, I receive an error:
-```
-|  Error:
-|  method teeing in class java.util.stream.Collectors cannot be applied to given types;
-|    required: java.util.stream.Collector<? super T,?,R1>,java.util.stream.Collector<? super T,?,R2>,java.util.function.BiFunction<? super R1,? super R2,R>
-|    found: java.util.stream.Collector<java.lang.Object,capture#29 of ?,java.lang.Double>,java.util.stream.Collector<java.lang.Object,capture#30 of ?,java.lang.Long>
-|    reason: cannot infer type-variable(s) T,R1,R2,R
-|      (actual and formal argument lists differ in length)
-|  Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting() ), (s, c) -> s / c )
-|                                      ^---------------^
-|  Error:
-|  incompatible types: cannot infer type-variable(s) T
-|      (argument mismatch; bad return type in lambda expression
-|        java.lang.Object cannot be converted to double)
-|  Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting() ), (s, c) -> s / c )
-|                                                         ^--------------------------------^
+Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing( Collectors.summingDouble( i -> i ), Collectors.counting(), (s, c) -> s / c ) )
 ```
 
 ## :confused: 334: JVM Constants API
@@ -204,9 +186,15 @@ Nothing new - unless you are building custom JRE images.
 Included in RedHat builds.  
 You can find it in OpenJDK since v1.8.0 on RedHat Linux 7.x.
 
-:disappointed: Not included in the official build from Oracle.  
-See this issue for detailsé https://bugs.openjdk.java.net/browse/JDK-8215030
+You can turn it on as follows:
+```
+java -XX:+UseShenandoahGC
+```
 
+:disappointed: Not included in the official build from Oracle.  
+See this issue for details: https://bugs.openjdk.java.net/browse/JDK-8215030
+
+Try of turning it on leads to an error:
 ```
 $ java -XX:+UseShenandoahGC
 Error: VM option 'UseShenandoahGC' is experimental and must be enabled via -XX:+UnlockExperimentalVMOptions.
