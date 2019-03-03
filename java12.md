@@ -67,12 +67,12 @@ There are 2 leftovers in the `String` class:
 ### :confused: transform
 Before - simpler:
 ```java
-new BigInteger( "65536" ).getLowestSetBit()
+new BigInteger( "65536" ).getLowestSetBit(); // ==> 16
 ```
 
 Now - more complicated:
 ```java
-"65536".transform( BigInteger::new ).getLowestSetBit()
+"65536".transform( BigInteger::new ).getLowestSetBit(); // ==> 16
 ```
 
 ### :confused: indent
