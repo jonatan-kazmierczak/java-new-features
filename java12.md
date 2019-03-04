@@ -99,7 +99,7 @@ By using switch expressions with default configuration, you will see an error:
 
 You have to enable this feature first:
 ```
-/usr/lib/jvm/java-12-openjdk/bin/jshell --enable-preview
+jshell --enable-preview
 ```
 
 Then you can use it:
@@ -219,7 +219,10 @@ However, you are welcomed to try these new methods:
 You can find it in OpenJDK since v1.8.0 on RedHat Linux 7.x.
 You can turn it on as follows:
 ```
-java -XX:+UseShenandoahGC
+$ java -XX:+UseShenandoahGC -version
+openjdk version "1.8.0_191"
+OpenJDK Runtime Environment (build 1.8.0_191-b12)
+OpenJDK 64-Bit Server VM (build 25.191-b12, mixed mode)
 ```
 
 :+1: Included in Debian builds:
