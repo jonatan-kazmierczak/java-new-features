@@ -90,6 +90,25 @@ System.out.println( jsonOuter.indent( -8 ) );
 
 ## :disappointed: 325: Switch Expressions (Preview)
 
+### Before
+```java
+String developerRating( int numberOfChildren ) {
+    switch (numberOfChildren) {
+        case 0: return "open source contributor";
+        case 1: return "junior";
+        case 2: return "senior";
+        case 3: return "expert";
+        default:
+            if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
+            return "manager";
+    }
+}
+
+developerRating( 0 ); // ==> "open source contributor"
+developerRating( 4 ); // ==> "manager"
+```
+
+### Now
 By using switch expressions with default configuration, you will see an error:
 ```
 |  Error:
