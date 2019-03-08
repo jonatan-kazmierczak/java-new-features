@@ -140,6 +140,30 @@ developerRating( 0 ); // ==> "open source contributor"
 developerRating( 4 ); // ==> "manager"
 ```
 
+### JEP Motivation
+JEP description includes example determining, how long is each day of the week - how many letters does it include.  
+That case can be easily implemented with features existing since Java 1.5:
+```java
+enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, }
+
+int weekdayLength( Weekday day ) { return day.name().length(); }
+
+weekdayLength( Weekday.Monday ); // ==> 6
+weekdayLength( Weekday.Saturday ); // ==> 8
+```
+
+Other popular example is to determine working/non-working weekdays.
+It can be also implemented simply with features existing since Java 1.5:
+```java
+enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, }
+var nonWorkingDays = EnumSet.of( Weekday.Saturday, Weekday.Sunday );
+
+boolean isWorkingDay( Weekday day ) { return !nonWorkingDays.contains( day ); }
+
+isWorkingDay( Weekday.Monday ); // ==> true
+isWorkingDay( Weekday.Sunday ); // ==> false
+```
+
 ## Other extensions to the standard library
 ### CompactNumberFormat
 
@@ -157,7 +181,7 @@ var cnf = NumberFormat.getCompactNumberInstance();
 cnf.format( 1L << 10 ); // ==> 1K
 cnf.format( 1920 );     // ==> 2K - instead of 1.9K
 cnf.format( 1L << 20 ); // ==> 1M
-cnf.format( 1L << 30 ); // ==> 1B - why?
+cnf.format( 1L << 30 ); // ==> 1B - why? Billion, not Giga :)
 cnf.format( 1L << 40 ); // ==> 1T
 cnf.format( 1L << 50 ); // ==> 1126T
 ```
@@ -209,7 +233,7 @@ Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing(
 ) )
 ```
 
-The initial motivation from referenced JIRA issue could be easily solved:
+The initial motivation from referenced JIRA issue could be easily solved since Java 8:
 ```java
 Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.summarizingInt( i -> i ) )
 // ==> IntSummaryStatistics{count=4, sum=30, min=2, average=7.500000, max=16}
@@ -232,10 +256,15 @@ However, you are welcomed to try these new methods:
 "Java 12".resolveConstantDesc( null ); // ==> "Java 12"
 ```
 
-## :disappointed: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
+## :+1: 189: Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)
 
-:+1: Included in RedHat builds.  
-You can find it in OpenJDK since v1.8.0 on RedHat Linux 7.x.
+Feature developed primarily by Aleksey Shipilëv from Red Hat.
+Motivations:
+1. application throughput - constant CG pauses regardless of heap size
+2. optimization of RAM usage in cloud environments
+
+:+1: Included in Red Hat builds.  
+You can find it in OpenJDK since v1.8.0 on Red Hat Linux 7.x.
 You can turn it on as follows:
 ```
 $ java -XX:+UseShenandoahGC -version
@@ -253,8 +282,9 @@ OpenJDK Runtime Environment (build 12+33-Debian-1)
 OpenJDK 64-Bit Server VM (build 12+33-Debian-1, mixed mode, sharing)
 ```
 
-:disappointed: Not included in the official build from Oracle.  
-See this issue for details: https://bugs.openjdk.java.net/browse/JDK-8215030
+:disappointed: Excluded in official builds from Oracle.  
+See this issue for details: https://bugs.openjdk.java.net/browse/JDK-8215030  
+Possible reason: Shenandoah is a production ready competitor of experimental ZGC, introduced in JDK 11.
 
 Try of turning it on leads to an error:
 ```
@@ -266,11 +296,13 @@ Error occurred during initialization of VM
 Option -XX:+UseShenandoahGC not supported
 ```
 
-## :disappointed: 346: Promptly Return Unused Committed Memory from G1
-Made in :switzerland:  
-:disappointed: switched off by default.
+## :+1: 346: Promptly Return Unused Committed Memory from G1
+Feature initiated by Ruslan Synytsky from Jelastic. It is included in Shenandoah as well.
+Motivation: optimization of RAM usage in cloud environments.
 
-## 344: Abortable Mixed Collections for G1
+## :+1: 344: Abortable Mixed Collections for G1
+Motivation: introduces G1 collection pauses of configured/predictible length.  
+Until then, G1 pauses often exceed configured limits.
 
 ## :confused: 341: Default CDS Archives
 Nothing new - unless you are building custom JRE images.
