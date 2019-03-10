@@ -263,9 +263,9 @@ Motivations:
 1. application throughput - constant CG pauses regardless of heap size
 2. optimization of RAM usage in cloud environments
 
-:+1: Included in Red Hat builds.  
+### :+1: Included in Red Hat builds (productive)
 You can find it in OpenJDK since v1.8.0 on Red Hat Linux 7.x.
-You can turn it on as follows:
+You can turn it on as demonstrated below:
 ```
 $ java -XX:+UseShenandoahGC -version
 openjdk version "1.8.0_191"
@@ -273,7 +273,15 @@ OpenJDK Runtime Environment (build 1.8.0_191-b12)
 OpenJDK 64-Bit Server VM (build 25.191-b12, mixed mode)
 ```
 
-:+1: Included in Debian builds:
+```
+$ java -XX:+UseShenandoahGC -verbose:gc -version
+[0.008s][info][gc] Using Shenandoah
+openjdk version "11.0.1" 2018-10-16 LTS
+OpenJDK Runtime Environment 18.9 (build 11.0.1+13-LTS)
+OpenJDK 64-Bit Server VM 18.9 (build 11.0.1+13-LTS, mixed mode)
+```
+
+### :+1: Included in Debian builds (experimental)
 ```
 $ java -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -verbose:gc -version
 [0.005s][info][gc] Using Shenandoah
@@ -282,7 +290,7 @@ OpenJDK Runtime Environment (build 12+33-Debian-1)
 OpenJDK 64-Bit Server VM (build 12+33-Debian-1, mixed mode, sharing)
 ```
 
-:disappointed: Excluded in official builds from Oracle.  
+### :disappointed: Excluded in official builds from Oracle.  
 See this issue for details: https://bugs.openjdk.java.net/browse/JDK-8215030  
 Possible reason: Shenandoah is a production ready competitor of experimental ZGC, introduced in JDK 11.
 
@@ -299,6 +307,8 @@ Option -XX:+UseShenandoahGC not supported
 ## :+1: 346: Promptly Return Unused Committed Memory from G1
 Feature initiated by Ruslan Synytsky from Jelastic. It is included in Shenandoah as well.
 Motivation: optimization of RAM usage in cloud environments.
+
+See [this very clear and informative presentation](https://www.slideshare.net/jelastic/elastic-jvm-automatic-vertical-scaling-of-the-java-heap) to learn how different Garbage Collectors work.
 
 ## :+1: 344: Abortable Mixed Collections for G1
 Motivation: introduces G1 collection pauses of configured/predictible length.  
