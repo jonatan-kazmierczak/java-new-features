@@ -95,9 +95,9 @@ System.out.println( jsonOuter.indent( -8 ) );
 String developerRating( int numberOfChildren ) {
     switch (numberOfChildren) {
         case 0: return "open source contributor";
-        case 1: return "junior";
-        case 2: return "senior";
-        case 3: return "expert";
+        case 1:
+        case 2: return "junior";
+        case 3: return "senior";
         default:
             if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
             return "manager";
@@ -126,9 +126,8 @@ Then you can use it:
 String developerRating( int numberOfChildren ) {
     return switch (numberOfChildren) {
         case 0 -> "open source contributor";
-        case 1 -> "junior";
-        case 2 -> "senior";
-        case 3 -> "expert";
+        case 1, 2 -> "junior";
+        case 3 -> "senior";
         default -> {
             if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
             break "manager";
@@ -314,8 +313,11 @@ See [this very clear and informative presentation](https://www.slideshare.net/je
 Motivation: introduces G1 collection pauses of configured/predictible length.  
 Until then, G1 pauses often exceed configured limits.
 
-## :confused: 341: Default CDS Archives
-Nothing new - unless you are building custom JRE images.
+## :+1: 341: Default CDS Archives
+- CDS feature improves startup time of JVM
+- in JDK 11 "Class data sharing is enabled by default" - see https://docs.oracle.com/en/java/javase/11/vm/class-data-sharing.html#GUID-882DC523-706D-403E-8A06-FBBB0E1B2128
+- however, required `classes.jsa` is not provided in OpenJDK 11 builds - so the feature doesn't work
+- this JEP adds "dump classes to `classes.jsa`" step to OpenJDK 12 builds - so now the file exists and the feature works
 
 ## :confused: 230: Microbenchmark Suite
 ## :confused: 340: One AArch64 Port, Not Two
