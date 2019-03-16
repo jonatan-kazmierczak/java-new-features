@@ -75,6 +75,30 @@ Now - more complicated:
 "65536".transform( BigInteger::new ).getLowestSetBit(); // ==> 16
 ```
 
+#### Motivation
+The method was intended to simplify String transformations. Is it really the case? Let's see.
+
+Example 1, from [JEP 326 page](http://openjdk.java.net/jeps/326), removal of "line markers", is overcomplicated.  
+It can be implemented much simpler since Java 1.4 using regular expressions:
+```java
+String removeLineMarkers(String text) {
+    return Pattern.compile( "^\\|  ", Pattern.MULTILINE ).matcher( text ).replaceAll( "" );
+}
+
+var text = "|  Welcome to JShell -- Version 12\n|  For an introduction type: /help intro";
+removeLineMarkers( text );
+```
+
+Example 2, from [JDK-8203703](https://bugs.openjdk.java.net/browse/JDK-8203703), string-capitalizer, is not only overcomplicated, but also buggy.  
+It can be implemented correctly and much simpler using regular expressions:
+```java
+String wordsCapitalizer(String text) {
+    return Pattern.compile( "\\b\\p{L}" ).matcher( text ).replaceAll( m -> m.group().toUpperCase() );
+}
+
+wordsCapitalizer( " [ voxxed days zurich 2019 ] " );
+```
+
 ### :confused: indent
 Would you like to format your JSON?  
 You are expecting too much from Java.
