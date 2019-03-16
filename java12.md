@@ -89,7 +89,7 @@ var text = "|  Welcome to JShell -- Version 12\n|  For an introduction type: /he
 removeLineMarkers( text );
 ```
 
-Example 2, from [JDK-8203703](https://bugs.openjdk.java.net/browse/JDK-8203703), string-capitalizer, is not only overcomplicated, but also buggy.  
+Example 2, from [JDK-8203703](https://bugs.openjdk.java.net/browse/JDK-8203703), words capitalizer, is not only overcomplicated, but also buggy.  
 It can be implemented correctly and much simpler using regular expressions:
 ```java
 String wordsCapitalizer(String text) {
