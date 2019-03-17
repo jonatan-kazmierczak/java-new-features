@@ -96,7 +96,7 @@ String wordsCapitalizer(String text) {
     return Pattern.compile( "\\b\\p{L}" ).matcher( text ).replaceAll( m -> m.group().toUpperCase() );
 }
 
-wordsCapitalizer( " [ voxxed days zurich 2019 ] " );
+wordsCapitalizer( " [ voxxed days zürich 2019 ] " );
 ```
 
 ### :confused: indent
