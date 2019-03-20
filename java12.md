@@ -241,22 +241,21 @@ Is this what you would expect?
 ### :confused: Collectors.teeing
 Origin: https://bugs.openjdk.java.net/browse/JDK-8209685
 
-How to rewrite this snippet
+Example of usage:
 ```java
-Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.averagingInt( i -> i ) )
-```
-in overcomplicated and overweighted way?
-
-Here you are:
-```java
-Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.teeing(
-    Collectors.summingDouble( i -> i ),
-    Collectors.counting(),
-    (s, c) -> s / c
-) )
+Stream.of( "Devoxx", "Voxxed Days", "Code One", "Basel One" )
+    .collect( Collectors.teeing(
+        // first collector
+        Collectors.filtering( n -> n.contains("xx"), Collectors.toUnmodifiableList() ),
+        // second collector
+        Collectors.filtering( n -> n.endsWith("One"), Collectors.toUnmodifiableList() ),
+        // merger - automatic type inference doesn't work here
+        (List<String> list1, List<String> list2) -> List.of( list1, list2 )
+) );
 ```
 
-The initial motivation from referenced JIRA issue could be easily solved since Java 8:
+#### Motivation
+Example from referenced JIRA issue could be easily solved since Java 1.8:
 ```java
 Stream.of( 2, 4, 8, 0x10 ).collect( Collectors.summarizingInt( i -> i ) )
 // ==> IntSummaryStatistics{count=4, sum=30, min=2, average=7.500000, max=16}
