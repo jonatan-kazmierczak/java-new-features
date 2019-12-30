@@ -1,10 +1,10 @@
 # Java 14 - new features
 
 ## Language syntax
-### 305: 	Pattern Matching for instanceof (Preview)
 ### 359: 	Records (Preview)
-### 361: 	Switch Expressions (Standard)
+### 305: 	Pattern Matching for instanceof (Preview)
 ### 368: 	Text Blocks (Second Preview)
+### 361: 	Switch Expressions (Standard)
 
 ## JVM - general
 ### 358: 	Helpful NullPointerExceptions
