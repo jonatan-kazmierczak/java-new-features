@@ -322,7 +322,7 @@ starting from the most recommended:
 Here you can find the final, summarized list of recommended Java Virtual Machines and Garbage Collectors - starting from the most recommended:
 
 | VM | GC | Parallel, CPU- and RAM-intensive request processing | Single-threaded batch processing | High performance | Low execution cost | Low RAM usage |
-| --- | --- | :---: | :---: | :---: | :---: | :---: | --- |
+| --- | --- | :---: | :---: | :---: | :---: | :---: |
 | HotSpot | Serial | + | + | + | + | + |
 | HotSpot | Shenandoah | + | + | + | + | - | 
 | HotSpot | G1 | + | - | + | + | - |
