@@ -318,17 +318,18 @@ starting from the most recommended:
   - when the low cost of running in a container in the Cloud is most important:  
     Parallel, SVM, Serial, Shenandoah, Z
 
-## Final Recommendations
-Here you can find the final, summarized list of recommended Java Virtual Machines and Garbage Collectors - starting from the most recommended:
+## Final Score
+Here you can find the final score of top Garbage Collectors, in a scale from 1 (worst) to 5 (best):
 
-| VM | GC | Parallel, CPU- and RAM-intensive request processing | Single-threaded batch processing | High performance | Low execution cost | Low RAM usage |
-| --- | --- | :---: | :---: | :---: | :---: | :---: |
-| HotSpot | Serial | + | + | + | + | + |
-| HotSpot | Shenandoah | + | + | + | + | - | 
-| HotSpot | G1 | + | - | + | + | - |
-| HotSpot | Parallel | - | + | + | + | - |
-| Substrate | SVM | - | + | + | + | + |
-| HotSpot | Z | + | + | + | - | - |
+| VM | GC | High performance - parallel processing | Low cost - parallel processing | High performance - single-threaded processing | Low cost - single-threaded processing |
+| --- | --- | :---: | :---: | :---: | :---: |
+| HotSpot   | Serial     | 5 | 5 | 4 | 4 |
+| HotSpot   | Shenandoah | 5 | 4 | 4 | 4 |
+| HotSpot   | Parallel   | 4 | 4 | 5 | 5 |
+| HotSpot   | G1         | 5 | 5 | 4 | 2 |
+| HotSpot   | Z          | 4 | 3 | 3 | 3 |
+| OpenJ9    | gencon     | 2 | 2 | 2 | 2 |
+| Substrate | SVM        | 1 | 1 | 2 | 5 |
 
 ## References
 - [HotSpot Virtual Machine Garbage Collection Tuning Guide](https://docs.oracle.com/en/java/javase/13/gctuning/)
