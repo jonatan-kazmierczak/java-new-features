@@ -2,7 +2,7 @@
 
 ## Language syntax
 ### 305: 	Pattern Matching for instanceof (Preview)
-Inspired by Kotlin.
+Inspired by [Smart Casts](https://kotlinlang.org/docs/reference/typecasts.html#smart-casts) from Kotlin.
 
 #### Example
 Method checking, if the parameter is null, blank String or empty collection.
@@ -28,7 +28,7 @@ boolean isNullOrEmpty( Object o ) {
 ```
 
 ### 359: 	Records (Preview)
-Inspired by Scala (case class), Kotlin (data class) and Pascal (record keyword).
+Inspired by [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) from Scala, [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) from Kotlin and records from Pascal.
 
 #### Example
 Definition:
