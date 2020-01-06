@@ -1,8 +1,41 @@
 # Java 14 - new features
 
 ## Language syntax
-### 359: 	Records (Preview)
 ### 305: 	Pattern Matching for instanceof (Preview)
+Inspired by Kotlin.
+
+Example:
+```java
+boolean isNullOrEmpty( Object o ) {
+  return
+    o == null ||
+    o instanceof String s && s.isBlank() ||
+    o instanceof Collection c && c.isEmpty();
+}
+```
+
+### 359: 	Records (Preview)
+Inspired by Scala (case class), Kotlin (data class) and Pascal (record keyword).
+
+#### Example
+Definition:
+```java
+record Person(String name, Person partner) {}
+```
+
+Compiled as:
+```
+```
+
+Representation by Class Visualizer:
+
+
+Usage:
+```java
+var man = new Person("Adam", null);
+var woman = new Person("Eve", man);
+```
+
 ### 368: 	Text Blocks (Second Preview)
 ### 361: 	Switch Expressions (Standard)
 
