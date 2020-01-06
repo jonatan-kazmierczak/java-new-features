@@ -4,7 +4,20 @@
 ### 305: 	Pattern Matching for instanceof (Preview)
 Inspired by Kotlin.
 
-Example:
+#### Example
+Method checking, if the parameter is null, blank String or empty collection.
+
+Before:
+```java
+boolean isNullOrEmpty( Object o ) {
+  return
+    o == null ||
+    o instanceof String && ((String) o).isBlank() ||
+    o instanceof Collection && ((Collection) o).isEmpty();
+}
+```
+
+Now:
 ```java
 boolean isNullOrEmpty( Object o ) {
   return
