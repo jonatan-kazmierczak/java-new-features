@@ -28,7 +28,7 @@ boolean isNullOrEmpty( Object o ) {
 ```
 
 ### 359: 	Records (Preview)
-Inspired by [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) from Scala, [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) from Kotlin and records from Pascal.
+Inspired by [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) from Scala, [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) from Kotlin and [Record Types](https://www.freepascal.org/docs-html/ref/refsu15.html) from Pascal.
 
 #### Example
 Definition:
@@ -50,7 +50,10 @@ var woman = new Person("Eve", man);
 ```
 
 ### 368: 	Text Blocks (Second Preview)
+Inspired by Text Blocks from Scala, Kotlin and Groovy.
+
 ### 361: 	Switch Expressions (Standard)
+Inspired by [When Expression](https://kotlinlang.org/docs/reference/control-flow.html#when-expression) from Kotlin.
 
 ## JVM - general
 ### 358: 	Helpful NullPointerExceptions
