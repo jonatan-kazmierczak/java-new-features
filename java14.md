@@ -2,7 +2,13 @@
 
 ## Language syntax
 ### 305: 	Pattern Matching for instanceof (Preview)
-Inspired by [Smart Casts](https://kotlinlang.org/docs/reference/typecasts.html#smart-casts) from Kotlin.
+Preview feature - requires `--enable-preview` parameter during compilation.
+
+#### Description
+Extended `instanceof` operator allowing to declare local variable of the checked type.
+
+Inspired by
+[Smart Casts](https://kotlinlang.org/docs/reference/typecasts.html#smart-casts) from Kotlin.
 
 #### Example
 Method checking, if the parameter is null, blank String or empty collection.
@@ -28,32 +34,119 @@ boolean isNullOrEmpty( Object o ) {
 ```
 
 ### 359: 	Records (Preview)
-Inspired by [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) from Scala, [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) from Kotlin and [Record Types](https://www.freepascal.org/docs-html/ref/refsu15.html) from Pascal.
+Preview feature - requires `--enable-preview` parameter during compilation.
+
+#### Description
+Immutable value-holding class.
+
+Inspired by:
+- [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) from Scala
+- [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) from Kotlin
+- [Record Type](https://www.freepascal.org/docs-html/ref/refsu15.html) from Pascal
 
 #### Example
-Definition:
+Class holding 2 information about the person: name (mandatory) and an optional reference to a partner.
+
+Simplest definition with 2 fields:
 ```java
-record Person(String name, Person partner) {}
+public record Person( String name, Person partner ) {}
 ```
 
-Compiled as:
-```
+Extended definition with an additional constructor and a method:
+```java
+public record Person( String name, Person partner ) {
+  /** Second constructor referring to the first one. */
+  public Person( String name ) { this( name, null ); }
+  /** Usage of a field. */
+  public String getNameInUppercase() { return name.toUpperCase(); }
+}
 ```
 
-Representation by Class Visualizer:
+Compiled as follows:
+```java
+public final class Person extends Record {
+  private final String name;
+  private final Person partner;
+  
+  public Person(String name);
+  public Person(String name, Person partner);
 
+  public String getNameInUppercase();
+  public String toString();
+  public final int hashCode();
+  public final boolean equals(Object o);
+  public String name();
+  public Person partner();
+}
+```
 
 Usage:
 ```java
-var man = new Person("Adam", null);
+var man = new Person("Adam");
 var woman = new Person("Eve", man);
+woman.toString() // ==> "Person[name=Eve, partner=Person[name=Adam, partner=null]]"
+
+new Person("Eve", new Person("Adam")).equals( woman ) // ==> true
 ```
 
 ### 368: 	Text Blocks (Second Preview)
-Inspired by Text Blocks from Scala, Kotlin and Groovy.
+Preview feature - requires `--enable-preview` parameter during compilation.
+
+#### Description
+Multi-line string literals.  
+Initially introduced in Java 13.
+
+Inspiration:
+- Functionality: Groovy, JavaScript
+- Syntax: Groovy, Scala, Kotlin
+
+#### Examples
+
+##### Example 1
+```java
+""" short text """
+```
+
+results with:
+```
+|  Error:
+|  illegal text block open delimiter sequence, missing line terminator
+|  """ short text """
+|      ^
+```
+
+##### Example 2
 
 ### 361: 	Switch Expressions (Standard)
-Inspired by [When Expression](https://kotlinlang.org/docs/reference/control-flow.html#when-expression) from Kotlin.
+#### Description
+Simplified variant of the switch statement.  
+Initially introduced in Java 12.
+
+Inspired by
+[When Expression](https://kotlinlang.org/docs/reference/control-flow.html#when-expression) from Kotlin.
+
+#### Example
+Method rating developer based on a number of children:
+
+```java
+String developerRating( int numberOfChildren ) {
+    return switch (numberOfChildren) {
+        case 0 -> "open source contributor";
+        case 1, 2 -> "junior";
+        case 3 -> "senior";
+        default -> {
+            if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
+            yield "manager";
+        }
+    };
+}
+```
+
+Usage:
+```java
+developerRating( 0 ); // ==> "open source contributor"
+developerRating( 4 ); // ==> "manager"
+```
 
 ## JVM - general
 ### 358: 	Helpful NullPointerExceptions
