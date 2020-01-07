@@ -97,8 +97,13 @@ Multi-line string literals.
 Initially introduced in Java 13.
 
 Inspiration:
-- Functionality: Groovy, JavaScript
-- Syntax: Groovy, Scala, Kotlin
+- Functionality:
+  - [Triple-single-quoted string](https://groovy-lang.org/syntax.html#_triple_single_quoted_string) from Groovy
+  - [Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) from JavaScript
+- Syntax:
+  - [Triple-double-quoted string](https://groovy-lang.org/syntax.html#_triple_double_quoted_string) from Groovy
+  - Multi-line string literals from Scala
+  - [Raw string literals](https://kotlinlang.org/docs/reference/basic-types.html#string-literals) from Kotlin
 
 #### Examples
 
