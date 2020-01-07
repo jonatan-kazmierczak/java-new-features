@@ -86,8 +86,16 @@ var man = new Person("Adam");
 var woman = new Person("Eve", man);
 woman.toString() // ==> "Person[name=Eve, partner=Person[name=Adam, partner=null]]"
 
+woman.partner().name() // ==> "Adam"
+woman.getNameInUppercase() // ==> "EVE"
+
+// Deep equals
 new Person("Eve", new Person("Adam")).equals( woman ) // ==> true
 ```
+
+#### Summary
+- field readers are generated in "Scala way" - not, like in Kotlin, as getters
+- unlike in Scala and Kotlin, there is no way to define mutable properties
 
 ### 368: 	Text Blocks (Second Preview)
 Preview feature - requires `--enable-preview` parameter during compilation.
@@ -109,6 +117,17 @@ Inspiration:
 
 ##### Example 1
 ```java
+var sql = """
+    select *
+    from people person
+        join people partner on person.id = partner.id
+    order by name
+    \t
+"""
+```
+
+##### Example 2
+```java
 """ short text """
 ```
 
@@ -119,8 +138,6 @@ results with:
 |  """ short text """
 |      ^
 ```
-
-##### Example 2
 
 ### 361: 	Switch Expressions (Standard)
 #### Description
