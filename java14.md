@@ -62,7 +62,7 @@ public record Person( String name, Person partner ) {
 }
 ```
 
-Compiled as follows:
+Compiler turns it out into the following class:
 ```java
 public final class Person extends Record {
   private final String name;
@@ -84,13 +84,13 @@ Usage:
 ```java
 var man = new Person("Adam");
 var woman = new Person("Eve", man);
-woman.toString() // ==> "Person[name=Eve, partner=Person[name=Adam, partner=null]]"
+woman.toString(); // ==> "Person[name=Eve, partner=Person[name=Adam, partner=null]]"
 
-woman.partner().name() // ==> "Adam"
-woman.getNameInUppercase() // ==> "EVE"
+woman.partner().name(); // ==> "Adam"
+woman.getNameInUppercase(); // ==> "EVE"
 
 // Deep equals
-new Person("Eve", new Person("Adam")).equals( woman ) // ==> true
+new Person("Eve", new Person("Adam")).equals( woman ); // ==> true
 ```
 
 #### Summary
@@ -109,40 +109,16 @@ Inspiration:
   - [Triple-single-quoted string](https://groovy-lang.org/syntax.html#_triple_single_quoted_string) from Groovy
   - [Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) from JavaScript
 - Syntax:
-  - [Triple-double-quoted string](https://groovy-lang.org/syntax.html#_triple_double_quoted_string) from Groovy
   - Multi-line string literals from Scala
+  - [Triple-double-quoted string](https://groovy-lang.org/syntax.html#_triple_double_quoted_string) from Groovy
   - [Raw string literals](https://kotlinlang.org/docs/reference/basic-types.html#string-literals) from Kotlin
 
 #### Examples
 
-##### Example 1
-```java
-var sql = """
-    select *
-    from people person
-        join people partner on person.id = partner.id
-    order by name
-    \t
-"""
-```
-
-##### Example 2
-```java
-""" short text """
-```
-
-results with:
-```
-|  Error:
-|  illegal text block open delimiter sequence, missing line terminator
-|  """ short text """
-|      ^
-```
-
 ### 361: 	Switch Expressions (Standard)
 #### Description
 Simplified variant of the switch statement.  
-Initially introduced in Java 12.
+Initially introduced in Java 12, adjusted in Java 13.
 
 Inspired by
 [When Expression](https://kotlinlang.org/docs/reference/control-flow.html#when-expression) from Kotlin.
@@ -167,6 +143,7 @@ String developerRating( int numberOfChildren ) {
 Usage:
 ```java
 developerRating( 0 ); // ==> "open source contributor"
+developerRating( 2 ); // ==> "junior"
 developerRating( 4 ); // ==> "manager"
 ```
 
