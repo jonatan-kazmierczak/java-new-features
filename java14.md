@@ -121,27 +121,48 @@ SQL select query.
 var table = "person";
 var field = "name";
 var sql = """
-    select ${field}, '\t' as test
+    select ${field}, "\t" as test
     from ${table}
     order by ${field}
 """;
-// sql ==> "    select ${field}, '\t' as test\n    from ${table}\n    order by ${field}\n"
+// sql ==> "    select ${field}, \"\t\" as test\n    from ${table}\n    order by ${field}\n"
 ```
 
-Let's try to use the `sql` with stripping of the indent:
+Let's try to use the `sql` with stripping of the indentation:
 ```java
 System.out.println( sql.stripIndent() );
 ```
+
 Result:
 ```
-    select ${field}, '  ' as test
+    select ${field}, "  " as test
     from ${table}
     order by ${field}
 
 ```
-- indent stripping did not work
+- there is unwanted trailing empty line
+- indentation stripping did not work
 - `\t` was replaced with invisible tab character (like in Groovy and JavaScript)
-- variables are not interpolated - like in Multi-line string literals in Scala and Triple-single-quoted string in Groovy
+- variables are not interpolated - the same way, like in Multi-line string literals in Scala and Triple-single-quoted string in Groovy
+
+Let's try to strip the indentation, remove the trailing blank line and get the variables replaced with their values:
+```java
+System.out.println(
+  sql
+    .trim()
+    .indent( -4 )
+    .replace( "${table}", table )
+    .replace( "${field}", field )
+);
+```
+
+Result:
+```
+select name, "  " as test
+from person
+order by name
+```
+now as expected.
 
 ##### Example 2
 ```java
