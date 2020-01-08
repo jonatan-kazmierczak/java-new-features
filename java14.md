@@ -52,31 +52,29 @@ Simplest definition with 2 fields:
 public record Person( String name, Person partner ) {}
 ```
 
-Extended definition with an additional constructor and a method:
+Extended definition with an additional constructor, requiring only name, and an additional method returning name in upper case:
 ```java
 public record Person( String name, Person partner ) {
-  /** Second constructor referring to the first one. */
   public Person( String name ) { this( name, null ); }
-  /** Usage of a field. */
   public String getNameInUppercase() { return name.toUpperCase(); }
 }
 ```
 
-Compiler turns it out into the following class:
+The compiler turns it into the following class:
 ```java
 public final class Person extends Record {
   private final String name;
   private final Person partner;
   
-  public Person(String name);
-  public Person(String name, Person partner);
+  public Person(String name) { this( name, null ); }
+  public Person(String name, Person partner) { this.name = name; this.partner = partner; }
 
-  public String getNameInUppercase();
-  public String toString();
-  public final int hashCode();
-  public final boolean equals(Object o);
-  public String name();
-  public Person partner();
+  public String getNameInUppercase() { return name.toUpperCase(); }
+  public String toString() { /* ... */ }
+  public final int hashCode() { /* ... */ }
+  public final boolean equals(Object o) { /* ... */ }
+  public String name() { return name; }
+  public Person partner() { return partner; }
 }
 ```
 
@@ -94,7 +92,8 @@ new Person("Eve", new Person("Adam")).equals( woman ); // ==> true
 ```
 
 #### Summary
-- field readers are generated in "Scala way" - not, like in Kotlin, as getters
+- unlike Data Classes from Kotlin, Records are not Java Beans - they don't contain getters
+- field readers in Records are generated in in the same way, as in Case Classes from Scala - they have the same names as fields
 - unlike in Scala and Kotlin, there is no way to define mutable properties
 
 ### 368: 	Text Blocks (Second Preview)
@@ -115,6 +114,48 @@ Inspiration:
 
 #### Examples
 
+##### Example 1
+SQL select query.
+
+```java
+var table = "person";
+var field = "name";
+var sql = """
+    select ${field}, '\t' as test
+    from ${table}
+    order by ${field}
+""";
+// sql ==> "    select ${field}, '\t' as test\n    from ${table}\n    order by ${field}\n"
+```
+
+Let's try to use the `sql` with stripping of the indent:
+```java
+System.out.println( sql.stripIndent() );
+```
+Result:
+```
+    select ${field}, '  ' as test
+    from ${table}
+    order by ${field}
+
+```
+- indent stripping did not work
+- `\t` was replaced with invisible tab character (like in Groovy and JavaScript)
+- variables are not interpolated - like in Multi-line string literals in Scala and Triple-single-quoted string in Groovy
+
+##### Example 2
+```java
+""" short text """
+```
+
+results with:
+```
+|  Error:
+|  illegal text block open delimiter sequence, missing line terminator
+|  """ short text """
+|      ^
+```
+
 ### 361: 	Switch Expressions (Standard)
 #### Description
 Simplified variant of the switch statement.  
@@ -128,15 +169,15 @@ Method rating developer based on a number of children:
 
 ```java
 String developerRating( int numberOfChildren ) {
-    return switch (numberOfChildren) {
-        case 0 -> "open source contributor";
-        case 1, 2 -> "junior";
-        case 3 -> "senior";
-        default -> {
-            if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
-            yield "manager";
-        }
-    };
+  return switch (numberOfChildren) {
+    case 0 -> "open source contributor";
+    case 1, 2 -> "junior";
+    case 3 -> "senior";
+    default -> {
+      if (numberOfChildren < 0) throw new IndexOutOfBoundsException( numberOfChildren );
+      yield "manager";
+    }
+  };
 }
 ```
 
