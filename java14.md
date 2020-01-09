@@ -128,7 +128,7 @@ Result:
 |  var json = """{ "language": "Java", "version": 14 }"""
 |                ^
 ```
--> one-line texts cannot profit from the feature :(
+-> one-line texts cannot be used (unlike in other mentioned languages)
 
 ##### Example 2
 SQL select query - with required line terminator after opening `"""` sequence.
@@ -156,10 +156,9 @@ Result:
     order by ${field}
 
 ```
-- there is unwanted trailing empty line
-- indentation stripping did not work
-- `\t` was replaced with invisible tab character (like in Groovy and JavaScript)
-- variables are not interpolated - the same way, like in Multi-line string literals in Scala and Triple-single-quoted string in Groovy
+- `stripIndent` didn't remove the indentation and the empty trailing line - unlike `trimIndent` in Kotlin
+- `\t` was replaced with invisible tab character - like in Groovy and JavaScript
+- variables are not interpolated - like in Scala and in Triple-single-quoted string in Groovy, but unlike Kotlin, JavaScript and Triple-double-quoted string in Groovy
 
 Let's try to strip the indentation, remove the trailing blank line and get the variables replaced with their values:
 ```java
