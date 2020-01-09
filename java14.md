@@ -115,7 +115,23 @@ Inspiration:
 #### Examples
 
 ##### Example 1
-SQL select query.
+Simple JSON object.
+
+```java
+var json = """{ "language": "Java", "version": 14 }"""
+```
+
+Result:
+```
+|  Error:
+|  illegal text block open delimiter sequence, missing line terminator
+|  var json = """{ "language": "Java", "version": 14 }"""
+|                ^
+```
+-> one-line texts cannot profit from the feature :(
+
+##### Example 2
+SQL select query - with required line terminator after opening `"""` sequence.
 
 ```java
 var table = "person";
@@ -128,7 +144,7 @@ var sql = """
 // sql ==> "    select ${field}, \"\t\" as test\n    from ${table}\n    order by ${field}\n"
 ```
 
-Let's try to use the `sql` with stripping of the indentation:
+Let's try to use the `sql` variable with stripping of the indentation:
 ```java
 System.out.println( sql.stripIndent() );
 ```
@@ -164,18 +180,29 @@ order by name
 ```
 now as expected.
 
-##### Example 2
+##### Example 3
+SQL query from the previous example, but written in `stripIndent`-friendly way (closing `"""` in the last line of the text):
+
 ```java
-""" short text """
+var sql = """
+    select ${field}, "\t" as test
+    from ${table}
+    order by ${field}""";
+// sql ==> "select ${field}, \"\t\" as test\nfrom ${table}\norder by ${field}"
 ```
 
-results with:
+Let's try to strip the indentation:
+```java
+System.out.println( sql.stripIndent() );
 ```
-|  Error:
-|  illegal text block open delimiter sequence, missing line terminator
-|  """ short text """
-|      ^
+
+Result:
 ```
+select ${field}, "      " as test
+from ${table}
+order by ${field}
+```
+now there is no trailing new line and the indent is stripped.
 
 ### 361: 	Switch Expressions (Standard)
 #### Description
