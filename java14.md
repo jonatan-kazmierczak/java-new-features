@@ -180,26 +180,31 @@ order by name
 now as expected.
 
 ##### Example 3
-SQL query from the previous example, but written in `stripIndent`-friendly way (closing `"""` in the last line of the text):
+Another variant of the SQL query from the previous example:
 
 ```java
 var sql = """
-    select ${field}, "\t" as test
-    from ${table}
-    order by ${field}""";
-// sql ==> "select ${field}, \"\t\" as test\nfrom ${table}\norder by ${field}"
+    select *
+    from %s
+    order by %s \
+""";
+// sql ==> "    select *\n    from %s\n    order by %s "
 ```
 
 Let's try to strip the indentation:
 ```java
-System.out.println( sql.stripIndent() );
+System.out.println(
+  sql
+    .stripIndent()
+    .formatted( table, field )
+);
 ```
 
 Result:
 ```
-select ${field}, "      " as test
-from ${table}
-order by ${field}
+select *
+from person
+order by name
 ```
 now there is no trailing new line and the indent is stripped.
 
