@@ -165,7 +165,7 @@ Let's try to strip the indentation, remove the trailing blank line and get the v
 System.out.println(
   sql
     .trim()
-    .indent( -4 )
+    .indent( -4 ) // it will not delete any non-white-space character, so the value can be also less - i.e. -128
     .replace( "${table}", table )
     .replace( "${field}", field )
 );
@@ -177,7 +177,7 @@ select name, "  " as test
 from person
 order by name
 ```
-now as expected.
+as expected - no trailing empty line, the indent is stripped and variables are replaced with values.
 
 ##### Example 3
 Another variant of the SQL query from the previous example:
@@ -206,7 +206,7 @@ select *
 from person
 order by name
 ```
-now there is no trailing new line and the indent is stripped.
+as expected - no trailing empty line, the indent is stripped.
 
 ### 361: 	Switch Expressions (Standard)
 #### Description
@@ -247,8 +247,34 @@ developerRating( 4 ); // ==> "manager"
 ### 349: 	JFR Event Streaming
 
 ## JVM - Garbage Collectors
-### 364: 	ZGC on macOS
-### 365: 	ZGC on Windows
+The following GCs are currently available (on HotSpot VM):
+- Epsilon (Experimental)
+- G1
+- Parallel
+- ParallelOld
+- Serial
+- Shenandoah (Experimental; productive in RedHat OpenJDK, excluded from Oracle builds)
+- Z (Experimental)
+
+You can enable any of them with option: `-XX:+Use${name}GC` (`${name}` is one of above).  
+Enabling an experimental GC require additionally option `-XX:+UnlockExperimentalVMOptions`.  
+See an example below.
+
+### 364, 365: ZGC on macOS and Windows
+ZGC is now available on all 3 main platforms: Linux, macOS and Windows.  
+You can enable it with options: `-XX:+UnlockExperimentalVMOptions -XX:+UseZGC`
+
+Example of usage:
+```
+java -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -verbose:gc -version
+```
+
+Result:
+```
+[0.105s][info][gc] Using The Z Garbage Collector
+...
+```
+
 ### 345: 	NUMA-Aware Memory Allocation for G1
 ### 363: 	Remove the Concurrent Mark Sweep (CMS) Garbage Collector
 ### 366: 	Deprecate the ParallelScavenge + SerialOld GC Combination
