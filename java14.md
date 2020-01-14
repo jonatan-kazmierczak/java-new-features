@@ -240,29 +240,6 @@ developerRating( 2 ); // ==> "junior"
 developerRating( 4 ); // ==> "manager"
 ```
 
-## JVM - general
-### 358: 	Helpful NullPointerExceptions
-### 352: 	Non-Volatile Mapped Byte Buffers
-### 370: 	Foreign-Memory Access API (Incubator)
-### 349: 	JFR Event Streaming
-#### Available before
-##### Java Flight Recorder (JFR)
-It is very much recommended to always run Java with flight recording.
-
-In the following way you can start Java with flight recording, keeping last 1 day of data and dumping the recording into the file `recording.jfr`:
-```
-java \
--XX:+FlightRecorder \
--XX:StartFlightRecording=disk=true,filename=recording.jfr,dumponexit=true,maxage=1d\
-...
-```
-
-##### JDK Mission Control (JMC)
-You can load flight recording to JMC and analyze it.
-
-#### New functionalities
-Now it is possible to asynchronously subscribe for the events from within running Java application.
-
 ## JVM - Garbage Collectors
 The following GCs are currently available (on HotSpot VM):
 - Epsilon (Experimental)
@@ -295,6 +272,51 @@ Result:
 ### 345: 	NUMA-Aware Memory Allocation for G1
 ### 363: 	Remove the Concurrent Mark Sweep (CMS) Garbage Collector
 ### 366: 	Deprecate the ParallelScavenge + SerialOld GC Combination
+
+## JVM - general
+### 358: 	Helpful NullPointerExceptions
+### 352: 	Non-Volatile Mapped Byte Buffers
+### 370: 	Foreign-Memory Access API (Incubator)
+### 349: 	JFR Event Streaming
+#### Available before
+##### Java Flight Recorder (JFR)
+It is very much recommended to always run Java with flight recording.
+
+In the following way you can start Java with flight recording, keeping last 1 day of data and dumping the recording into the file `recording.jfr`:
+```
+java \
+-XX:+FlightRecorder \
+-XX:StartFlightRecording=disk=true,filename=recording.jfr,dumponexit=true,maxage=1d\
+...
+```
+
+##### JDK Mission Control (JMC)
+You can load flight recording to JMC and analyze it.
+
+#### New functionalities
+Now it is possible to asynchronously subscribe for the events from within running Java application.
+
+Example:
+```java
+import jdk.jfr.consumer.RecordingStream;
+import java.time.Duration;
+
+try (var rs = new RecordingStream()) {
+  rs.enable( "jdk.CPULoad" ).withPeriod( Duration.ofSeconds( 1 ) );
+  rs.onEvent( "jdk.CPULoad", event -> {
+    System.out.printf( "%.1f %% %n", event.getFloat( "machineTotal" ) * 100 );
+  });
+  rs.start();
+}
+```
+
+Result - 4 seconds of CPU usage:
+```
+7.2 % 
+7.0 % 
+2.5 % 
+5.3 % 
+```
 
 ## Tools
 ### 343: 	Packaging Tool (Incubator)
