@@ -291,7 +291,8 @@ java \
 ```
 
 ##### JDK Mission Control (JMC)
-You can load flight recording to JMC and analyze it.
+You can load flight recording to JMC and analyze it.  
+JMC can be downloaded from [here](https://www.oracle.com/technetwork/java/javaseproducts/downloads/jmc7-downloads-5868868.html).  
 
 #### New functionalities
 Now it is possible to asynchronously subscribe for the events from within running Java application.
