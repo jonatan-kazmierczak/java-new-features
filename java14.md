@@ -277,10 +277,22 @@ Result:
 ### 358: 	Helpful NullPointerExceptions
 ### 352: 	Non-Volatile Mapped Byte Buffers
 ### 370: 	Foreign-Memory Access API (Incubator)
+API allowing to allocate memory outside of heap and to access it in a safe way.  
+It is intended to replace the similar unsafe functionality existing in `Unsafe` class, and to be an alternative to `MappedBuffer` API.
+
+Example - allocation of 4 GB of RAM outside of heap:
+```java
+import jdk.incubator.foreign.MemorySegment;
+
+try ( var ms = MemorySegment.allocateNative( 1L << 32 ) ) {
+  // use allocated RAM
+}
+```
+
 ### 349: 	JFR Event Streaming
 #### Available before
 ##### Java Flight Recorder (JFR)
-It is very much recommended to always run Java with flight recording.
+It is recommended to run every critical Java application with flight recording turned on.
 
 In the following way you can start Java with flight recording, keeping last 1 day of data and dumping the recording into the file `recording.jfr`:
 ```
@@ -297,12 +309,12 @@ JMC can be downloaded from [here](https://www.oracle.com/technetwork/java/javase
 #### New functionalities
 Now it is possible to asynchronously subscribe for the events from within running Java application.
 
-Example:
+Example - monitoring total CPU usage in 1 second intervals:
 ```java
 import jdk.jfr.consumer.RecordingStream;
 import java.time.Duration;
 
-try (var rs = new RecordingStream()) {
+try ( var rs = new RecordingStream() ) {
   rs.enable( "jdk.CPULoad" ).withPeriod( Duration.ofSeconds( 1 ) );
   rs.onEvent( "jdk.CPULoad", event -> {
     System.out.printf( "%.1f %% %n", event.getFloat( "machineTotal" ) * 100 );
@@ -311,7 +323,7 @@ try (var rs = new RecordingStream()) {
 }
 ```
 
-Result - 4 seconds of CPU usage:
+Result:
 ```
 7.2 % 
 7.0 % 
