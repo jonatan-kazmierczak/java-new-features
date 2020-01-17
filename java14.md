@@ -275,6 +275,57 @@ Result:
 
 ## JVM - general
 ### 358: 	Helpful NullPointerExceptions
+Adds to the `NullPointerException` an informative message about the cause.  
+This feature has to be enabled with option: `-XX:+ShowCodeDetailsInExceptionMessages`
+
+The below examples extend the one from the point [359: Records (Preview)](#359-records-preview).
+
+#### Example 1
+One method in the invocation chain returns null.
+
+```java
+man.partner().name()
+```
+
+Result:
+```
+Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because the return value of "Person.partner()" is null
+```
+
+#### Example 2
+A parameter passed to a lambda function is null.
+
+```java
+Stream.of( man, woman )
+  .map( p -> p.partner() )
+  .map( p -> p.name() )
+  .collect( Collectors.toUnmodifiableList() )
+```
+
+Result:
+```
+Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because "<parameter1>" is null
+```
+-> keeping one method invocation per line always helps to narrow down the problem.
+
+#### Example 3
+A local variable is null.
+
+```java
+Person nobody = null;
+nobody.partner().name();
+```
+
+Result:
+```
+Exception java.lang.NullPointerException: Cannot invoke "Person.partner()" because "<local1>" is null
+```
+
+After compilation of the example with parameter `-g:vars`, we get the name of the local variable as well:
+```
+Exception java.lang.NullPointerException: Cannot invoke "Person.partner()" because "nobody" is null
+```
+
 ### 352: 	Non-Volatile Mapped Byte Buffers
 ### 370: 	Foreign-Memory Access API (Incubator)
 API allowing to allocate memory outside of heap and to access it in a safe way.  
