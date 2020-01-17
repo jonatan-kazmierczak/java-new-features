@@ -278,7 +278,7 @@ Result:
 ### 352: 	Non-Volatile Mapped Byte Buffers
 ### 370: 	Foreign-Memory Access API (Incubator)
 API allowing to allocate memory outside of heap and to access it in a safe way.  
-It is intended to replace the similar unsafe functionality existing in `Unsafe` class, and to be an alternative to `MappedBuffer` API.
+It is intended to replace the similar unsafe functionality existing in `Unsafe` class, and to be an alternative to `ByteBuffer` API.
 
 Example - allocation of 4 GB of RAM outside of heap:
 ```java
