@@ -254,6 +254,8 @@ You can enable any of them with option: `-XX:+Use${name}GC` (`${name}` is one of
 Enabling an experimental GC require additionally option `-XX:+UnlockExperimentalVMOptions`.  
 See an example below.
 
+**Note**: The blog post [High performance at low cost – choose the best JVM and the best Garbage Collector for your needs](https://blog.oio.de/2020/01/13/high-performance-at-low-cost-choose-the-best-jvm-and-the-best-garbage-collector-for-your-needs/) contains extensive comparison of different JVMs and the GCs included in them.
+
 ### 364, 365: ZGC on macOS and Windows
 ZGC is now available on all 3 main platforms: Linux, macOS and Windows.  
 You can enable it with options: `-XX:+UnlockExperimentalVMOptions -XX:+UseZGC`
@@ -349,7 +351,7 @@ In the following way you can start Java with flight recording, keeping last 1 da
 ```
 java \
 -XX:+FlightRecorder \
--XX:StartFlightRecording=disk=true,filename=recording.jfr,dumponexit=true,maxage=1d\
+-XX:StartFlightRecording=disk=true,filename=recording.jfr,dumponexit=true,maxage=1d \
 ...
 ```
 
