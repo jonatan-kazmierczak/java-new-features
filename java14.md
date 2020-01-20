@@ -308,7 +308,13 @@ Result:
 ```
 Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because "<parameter1>" is null
 ```
--> keeping one method invocation per line always helps to narrow down the problem.
+
+After compilation of the example with parameter `-g:vars`, we get the name of the lambda parameter as well:
+```
+Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because "p" is null
+```
+
+**Note**: keeping one method invocation per line always helps to narrow down the problem.
 
 #### Example 3
 A local variable is null.
