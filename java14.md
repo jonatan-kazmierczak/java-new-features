@@ -291,7 +291,7 @@ man.partner().name()
 
 Result:
 ```
-Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because the return value of "Person.partner()" is null
+java.lang.NullPointerException: Cannot invoke "Person.name()" because the return value of "Person.partner()" is null
 ```
 
 #### Example 2
@@ -306,12 +306,12 @@ Stream.of( man, woman )
 
 Result:
 ```
-Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because "<parameter1>" is null
+java.lang.NullPointerException: Cannot invoke "Person.name()" because "<parameter1>" is null
 ```
 
 After compilation of the example with parameter `-g:vars`, we get the name of the lambda parameter as well:
 ```
-Exception java.lang.NullPointerException: Cannot invoke "Person.name()" because "p" is null
+java.lang.NullPointerException: Cannot invoke "Person.name()" because "p" is null
 ```
 
 **Note**: keeping one method invocation per line always helps to narrow down the problem.
@@ -326,13 +326,84 @@ nobody.partner().name();
 
 Result:
 ```
-Exception java.lang.NullPointerException: Cannot invoke "Person.partner()" because "<local1>" is null
+java.lang.NullPointerException: Cannot invoke "Person.partner()" because "<local1>" is null
 ```
 
 After compilation of the example with parameter `-g:vars`, we get the name of the local variable as well:
 ```
-Exception java.lang.NullPointerException: Cannot invoke "Person.partner()" because "nobody" is null
+java.lang.NullPointerException: Cannot invoke "Person.partner()" because "nobody" is null
 ```
+
+#### Example 4
+A local variable is null.
+
+```java
+int calculate() {
+  Integer a = 2, b = 4, x = null;
+  return a + b * x;
+}
+calculate();
+```
+
+Result:
+```
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "<local2>" is null
+```
+
+Which variable is `local2`?  
+And why is `Integer.intValue()` invoked? Reason: unboxing.  
+And to get the variable name, the code must be compiled with parameter `-g:vars`. Afterwards we get the name of the local variable as well:
+```
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "x" is null
+```
+
+#### Example 5
+An array is null.
+
+```java
+int[] arr = null;
+arr[2] = 4;
+```
+
+Result:
+```
+java.lang.NullPointerException: Cannot store to int array because "REPL.$JShell$32D.arr" is null
+```
+
+#### Example 6
+Sorting a list containing null.
+
+```java
+var list = Arrays.asList( 2, null, 4 );
+list.sort( null );
+```
+
+Result:
+```
+java.lang.NullPointerException: Cannot invoke "java.lang.Comparable.compareTo(Object)" because "a[runHi]" is null
+      at ComparableTimSort.countRunAndMakeAscending (ComparableTimSort.java:320)
+      at ComparableTimSort.sort (ComparableTimSort.java:188)
+      at Arrays.sort (Arrays.java:1040)
+      at Arrays.sort (Arrays.java:1227)
+      at Arrays$ArrayList.sort (Arrays.java:4218)
+```
+
+#### Example 7
+Null passed to `List.of`.
+
+```java
+Integer x = null;
+var list = List.of( 2, x, 4 );
+```
+
+Result:
+```
+java.lang.NullPointerException
+      at Objects.requireNonNull (Objects.java:222)
+      at ImmutableCollections$ListN.<init> (ImmutableCollections.java:483)
+      at List.of (List.java:843)
+```
+no message in that case; Java standard library should be adjusted.
 
 ### 352: 	Non-Volatile Mapped Byte Buffers
 ### 370: 	Foreign-Memory Access API (Incubator)
