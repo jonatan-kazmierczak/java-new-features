@@ -320,24 +320,6 @@ java.lang.NullPointerException: Cannot invoke "Person.name()" because "p" is nul
 A local variable is null.
 
 ```java
-Person nobody = null;
-nobody.partner().name();
-```
-
-Result:
-```
-java.lang.NullPointerException: Cannot invoke "Person.partner()" because "<local1>" is null
-```
-
-After compilation of the example with parameter `-g:vars`, we get the name of the local variable as well:
-```
-java.lang.NullPointerException: Cannot invoke "Person.partner()" because "nobody" is null
-```
-
-#### Example 4
-A local variable is null.
-
-```java
 int calculate() {
   Integer a = 2, b = 4, x = null;
   return a + b * x;
@@ -357,7 +339,7 @@ And to get the variable name, the code must be compiled with parameter `-g:vars`
 java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "x" is null
 ```
 
-#### Example 5
+#### Example 4
 An array is null.
 
 ```java
@@ -367,10 +349,10 @@ arr[2] = 4;
 
 Result:
 ```
-java.lang.NullPointerException: Cannot store to int array because "REPL.$JShell$32D.arr" is null
+java.lang.NullPointerException: Cannot store to int array because "arr" is null
 ```
 
-#### Example 6
+#### Example 5
 Sorting a list containing null.
 
 ```java
@@ -388,7 +370,7 @@ java.lang.NullPointerException: Cannot invoke "java.lang.Comparable.compareTo(Ob
       at Arrays$ArrayList.sort (Arrays.java:4218)
 ```
 
-#### Example 7
+#### Example 6
 Null passed to `List.of`.
 
 ```java
