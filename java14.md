@@ -317,6 +317,23 @@ java.lang.NullPointerException: Cannot invoke "Person.name()" because "p" is nul
 **Note**: keeping one method invocation per line always helps to narrow down the problem.
 
 #### Example 3
+Method reference on a null object.
+
+```java
+Stream.of( man, woman )
+  .map( Person::partner )
+  .map( Person::name )
+  .collect( Collectors.toUnmodifiableList() )
+```
+
+Result:
+```
+java.lang.NullPointerException
+```
+
+no message in that case; NPEs during invocation of a method via reference (MethodHandle) don't contain message yet.
+
+#### Example 4
 A local variable is null.
 
 ```java
@@ -339,7 +356,7 @@ And to get the variable name, the code must be compiled with parameter `-g:vars`
 java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "x" is null
 ```
 
-#### Example 4
+#### Example 5
 An array is null.
 
 ```java
@@ -352,7 +369,7 @@ Result:
 java.lang.NullPointerException: Cannot store to int array because "arr" is null
 ```
 
-#### Example 5
+#### Example 6
 Sorting a list containing null.
 
 ```java
@@ -370,7 +387,7 @@ java.lang.NullPointerException: Cannot invoke "java.lang.Comparable.compareTo(Ob
       at Arrays$ArrayList.sort (Arrays.java:4218)
 ```
 
-#### Example 6
+#### Example 7
 Null passed to `List.of`.
 
 ```java
