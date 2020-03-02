@@ -7,8 +7,9 @@ Preview feature - requires `--enable-preview` parameter during compilation.
 #### Description
 Extended `instanceof` operator allowing to declare local variable of the checked type.
 
-Inspired by
-[Smart Casts](https://kotlinlang.org/docs/reference/typecasts.html#smart-casts) from Kotlin.
+Inspired by:
+- [Pattern matching](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/is) from C#
+- [Smart Casts](https://kotlinlang.org/docs/reference/typecasts.html#smart-casts) from Kotlin
 
 #### Example
 Method checking, if the parameter is null, blank String or empty collection.
@@ -31,6 +32,14 @@ boolean isNullOrEmpty( Object o ) {
     o instanceof String s && s.isBlank() ||
     o instanceof Collection c && c.isEmpty();
 }
+```
+
+Usage:
+```java
+isNullOrEmpty( null ); // ==> true
+isNullOrEmpty( "    " ); // ==> true
+isNullOrEmpty( Collections.emptyList() ); // ==> true
+isNullOrEmpty( Set.of( 2 ) ); // ==> false
 ```
 
 ### 359: 	Records (Preview)
